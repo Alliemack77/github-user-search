@@ -1,16 +1,22 @@
+import { useState, useEffect } from 'react';
 import './scss/main.scss'
-import Button from './components/Button';
 import SearchBar from './components/Searchbar';
 import UserCard from './components/UserCard';
+const URL = "https://api.github.com/users/alliemack77"
 
 function App() {
+  const [githubUser, setgithubUser] = useState({})
+
+  useEffect( () => {
+      fetch(URL)
+          .then(res => res.json())
+          .then(data => setgithubUser(data))
+  }, []) 
+
   return (
     <>
-      <h1>Joined 25 Jan 2011</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-      <Button />
       <SearchBar />
-      <UserCard />
+      <UserCard user={githubUser}/>
     </>
     
   );

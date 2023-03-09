@@ -1,6 +1,11 @@
-const Button = () => {
+
+const Button = ({onClick}) => {
     return (
-        <h1>Button</h1>
+        <button 
+            onClick={onClick}
+            className={`btn`}>
+            Search
+        </button>
     )
 }
 
