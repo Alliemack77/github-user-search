@@ -1,10 +1,10 @@
 
-const Button = ({onClick}) => {
+const Button = ({onClick, text}) => {
     return (
         <button 
             onClick={onClick}
             className={`btn`}>
-            Search
+            {text}
         </button>
     )
 }

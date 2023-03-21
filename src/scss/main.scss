@@ -1,4 +1,4 @@
-// @use 'sass:list';
+@use 'sass:list';
 
 
 /*** Variables ***/
@@ -24,6 +24,8 @@ $fw-700: 700;
 $fw-400: 400;
 
 // Color Themes
+$scheme-dark: $clr-white, $clr-medium-blue, $clr-dark-blue; 
+$scheme-light: $clr-grey, $clr-white, $clr-light-blue;
 
 
 /*** Reset ***/
@@ -51,6 +53,8 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   font-family: $ff-primary;
+  display: grid;
+  place-content: center;
 }
 
 img,
@@ -62,6 +66,26 @@ picture {
 input,
 button {
   font: inherit;
+}
+// , $box-color, $icon-color
+@mixin color-scheme($text, $bg-color, $body-color) {
+  
+  color: $text;
+  background-color: $bg-color;
+  
+  body {
+    background-color: $body-color;
+  }
+}
+
+.dark {
+  @include color-scheme($scheme-dark ...)
+
+  
+}
+
+.light {
+  @include color-scheme($scheme-light ...)
 }
 
 
@@ -84,8 +108,9 @@ button {
 }
 
 .container {
-    width: min(50ch, 100vw - 2rem);
-    margin-inline: auto;
+  border: solid red 2px;
+  width: min(50ch, 100vw - 2rem);
+  margin-inline: auto;
 }
 
 
@@ -99,7 +124,11 @@ button {
   background-color: $clr-accent-blue;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 }
+
+// search bar
+
 
 
 

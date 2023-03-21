@@ -5,6 +5,7 @@ This is my solution to the [Frontend Mentor Challenge GitHub User Search App](ht
 ## GitHub API
 
 - [Root Endpoint](https://api.github.com/)
-- [Users Endpoint](https://api.github.com/users/alliemack77)
-- [Repos](https://api.github.com/users/alliemack77/repos?per_page=2)
-- [Followers](https://api.github.com/users/alliemack77/followers)
+- [User Endpoint](https://api.github.com/users/alliemack77)
+- [User Repos Endpoint](https://api.github.com/users/alliemack77/repos?per_page=2)
+- [User Followers Endpoint](https://api.github.com/users/alliemack77/followers)
+

@@ -1,52 +1,85 @@
+import React,{ useContext } from 'react'
+import { GithubContext } from '../context/context'
 import { MdLocationOn } from 'react-icons/md'
 import { FiLink } from 'react-icons/fi'
 import { FaTwitter } from 'react-icons/fa'
 import { AiOutlineMail } from 'react-icons/ai'
+import sadKitty from '../assets/sad-kitty-search.jpg'
 
+const UserCard = () => {
+    const {githubUser, errorUser} = useContext(GithubContext)
+    const {
+        created_at,
+        avatar_url, 
+        login, 
+        twitter_username, 
+        name,
+        bio, 
+        public_repos, 
+        followers, 
+        following, 
+        location,
+        html_url, 
+        email
+    } = githubUser
 
-const UserCard = ({user}) => {
- console.log(user)
+    const date = new Date(created_at)
+    const day = date.getDate()
+    const month = new Date(created_at).toLocaleString("default", {month: 'short'})
+    const year = date.getFullYear()
+
+    if(errorUser) {
+        return (
+            <div>
+                <img src={sadKitty}></img>
+                <p>We've looked everywhere!</p>
+                <p>There's no one here by that name. Try your search again.</p>
+            </div>
+        )
+    }
+
     return (
-        <div>
-            <img src={user.avatar_url} alt=""/>
-            <p>{user.login}</p>
-            <p>{user.name}</p>
-            <p>{user.created_at}</p>
-            <p>{user.bio ? user.bio : "This profile has no bio."}</p>
+        <div className="user">
+            <img src={avatar_url} alt=""/>
+            <p>{login}</p>
+            <p>{twitter_username || name}</p>
+            <p>Joined {day} {month} {year}</p>
+            <p>{bio || "This profile has no bio."}</p>
             <div>
                 <div>
                     <p>Repos</p>
-                    <p>{user.public_repos}</p>
+                    <p>{public_repos}</p>
                 </div>
                 <div>
                     <p>Followers</p>
-                    <p>{user.followers}</p>
+                    <p>{followers}</p>
                 </div>
                 <div>
                     <p>Following</p>
-                    <p>{user.following}</p>
+                    <p>{following}</p>
                 </div>
             </div>
             <div>
                 <div>
                     <MdLocationOn />
-                    <p>{user.location ? user.location : "private"}</p>
+                    <p>{location || "Earth"}</p>
                 </div>
                 <div>
                     <FiLink />
-                    <a href={user.html_url ? user.html_url : ""}><p>{user.html_url ? user.html_url : "private"}</p></a>
+                    <a href={html_url}><p>{html_url}</p></a>
                 </div>
                 <div>
                     <FaTwitter />
-                    <p>{user.twitter_username ? user.twitter_username : "not available"}</p>
+                    <p>{twitter_username ? `@${twitter_username}` : "Not available"}</p>
                 </div>
                 <div>
                     <AiOutlineMail />
-                    <p>{user.email ? user.email : "private"}</p>
+                    <p>{email || "Private"}</p>
                 </div>
             </div>
-        </div>
-    )
+        </div>     
+    )  
 }
+
 
 export default UserCard

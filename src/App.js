@@ -1,25 +1,25 @@
-import { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import './scss/main.scss'
-import SearchBar from './components/Searchbar';
-import UserCard from './components/UserCard';
-const URL = "https://api.github.com/users/alliemack77"
+import SearchBar from './components/Searchbar'
+import UserCard from './components/UserCard'
+import { ThemeContext } from './context/themeContext';
 
 function App() {
-  const [githubUser, setgithubUser] = useState({})
+  
+  const isDarkMode = useContext(ThemeContext) 
 
-  useEffect( () => {
-      fetch(URL)
-          .then(res => res.json())
-          .then(data => setgithubUser(data))
-  }, []) 
+  console.log(isDarkMode)
+
 
   return (
-    <>
+    <div className={`container ${isDarkMode ? 'dark' : 'light'}`}>
+      <h1>devfinder</h1>
       <SearchBar />
-      <UserCard user={githubUser}/>
-    </>
+      <UserCard />
+    </div>
     
   );
 }
 
 export default App;
+
