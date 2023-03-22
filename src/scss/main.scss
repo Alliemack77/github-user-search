@@ -24,9 +24,31 @@ $fw-700: 700;
 $fw-400: 400;
 
 // Color Themes
-$scheme-dark: $clr-white, $clr-medium-blue, $clr-dark-blue; 
-$scheme-light: $clr-grey, $clr-white, $clr-light-blue;
+// $text, $bg-color, $user-color, $box-color, $icon-color, $theme-toggle;
+$scheme-dark: $clr-white, $clr-dark-blue, $clr-medium-blue, $clr-dark-blue, $clr-white; 
+$scheme-light: $clr-grey, $clr-light-blue, $clr-white, $clr-light-blue, $clr-grey;
 
+// Mixins
+@mixin color-scheme($text, $bg-color, $user-color, $box-color, $theme-toggle) {
+  color: $text;
+  background-color: $bg-color;
+
+  .search-bar, 
+  .user-card {
+    background-color: $user-color;
+  }
+
+  .github-stats {
+    background-color: $box-color;
+  }
+
+  .theme-toggle {
+    color: $text;
+    fill: $theme-toggle;
+
+  }
+
+}
 
 /*** Reset ***/
 *,
@@ -53,8 +75,7 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   font-family: $ff-primary;
-  display: grid;
-  place-content: center;
+  
 }
 
 img,
@@ -65,27 +86,10 @@ picture {
 
 input,
 button {
+  display: inline-block;
   font: inherit;
-}
-// , $box-color, $icon-color
-@mixin color-scheme($text, $bg-color, $body-color) {
-  
-  color: $text;
-  background-color: $bg-color;
-  
-  body {
-    background-color: $body-color;
-  }
-}
-
-.dark {
-  @include color-scheme($scheme-dark ...)
-
-  
-}
-
-.light {
-  @include color-scheme($scheme-light ...)
+  background-color: inherit;
+  border: none;
 }
 
 
@@ -108,29 +112,102 @@ button {
 }
 
 .container {
-  border: solid red 2px;
   width: min(50ch, 100vw - 2rem);
   margin-inline: auto;
 }
 
+// visually hide the element, but keep it in the accessability tree
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* added line */
+  border: 0;
+}
+
+.dark {
+  @include color-scheme($scheme-dark ...)
+}
+
+.light {
+  @include color-scheme($scheme-light ...)
+}
 
 /*** Components ***/
 // button
 .btn {
-  display: inline-block;
+  
   padding: .5rem 1rem;
   color: $clr-white;
   font-weight: 500;
   background-color: $clr-accent-blue;
-  border: none;
   border-radius: 10px;
   cursor: pointer;
+
+  &.theme-toggle {
+    background-color: unset;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: inline-flex;
+    gap: .75rem;
+
+    & svg {
+      font-size: $fs-500;
+    }
+  }
+}
+
+// header
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
 }
 
 // search bar
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem .5rem;
+  border-radius: 15px;
+
+  .form-control {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+  input,
+  input::placeholder {
+    color: $clr-white;
+  }
+
+}
+
+// user card
+.user-card {
+  border: solid red 2px;
+  border-radius: 15px;
+
+}
 
 
+/*** General Styles ***/
+main {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+}
 
+article {
+  min-height: 100vh;
+}
 
 
 

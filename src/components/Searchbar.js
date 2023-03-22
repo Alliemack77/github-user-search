@@ -10,20 +10,19 @@ const SearchBar = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log("Clicked")
         searchGitHubUser(user)
         setUser("")
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex"> 
-            <div>
+        <form onSubmit={handleSubmit} className="search-bar"> 
+            <div className="form-control">
                 <CiSearch />
                 <input 
                     value={user}
                     onChange={(e)=> {setUser(e.target.value)}}
-                    type="text" 
-                    placeholder='Search GitHub username...'/>
+                    type="search" 
+                    placeholder='Search GitHub...'/>
             </div>
             <Button type="submit" text="Search"/>
         </form>

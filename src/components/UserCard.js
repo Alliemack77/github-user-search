@@ -39,13 +39,13 @@ const UserCard = () => {
     }
 
     return (
-        <div className="user">
+        <div className="user-card">
             <img src={avatar_url} alt=""/>
             <p>{login}</p>
             <p>{twitter_username || name}</p>
             <p>Joined {day} {month} {year}</p>
             <p>{bio || "This profile has no bio."}</p>
-            <div>
+            <div className="github-stats">
                 <div>
                     <p>Repos</p>
                     <p>{public_repos}</p>

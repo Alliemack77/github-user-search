@@ -1,22 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import './scss/main.scss'
 import SearchBar from './components/Searchbar'
 import UserCard from './components/UserCard'
-import { ThemeContext } from './context/themeContext';
+import { ThemeContext } from './context/context';
+import Header from './components/Header';
 
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(true)
   
-  const isDarkMode = useContext(ThemeContext) 
-
-  console.log(isDarkMode)
-
-
   return (
-    <div className={`container ${isDarkMode ? 'dark' : 'light'}`}>
-      <h1>devfinder</h1>
-      <SearchBar />
-      <UserCard />
-    </div>
+    <main className={`${isDarkMode ? 'dark' : 'light'}`}>
+      <article className="container">
+        <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}/>
+        <SearchBar />
+        <UserCard />
+      </article>
+    </main>
     
   );
 }

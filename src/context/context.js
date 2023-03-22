@@ -32,4 +32,16 @@ const GithubProvider = ({children}) => {
     )
 }
 
+// const ThemeContext = createContext()
+
+// const ThemeProvider = ({children}) => {
+//     const [isDarkMode, setIsDarkMode] = useState(true)
+
+//     return (
+//         <ThemeContext.Provider value={{isDarkMode}}>
+//             {children}
+//         </ThemeContext.Provider>
+//     )
+// }
+// export {ThemeContext, ThemeProvider}
 export {GithubContext, GithubProvider}
