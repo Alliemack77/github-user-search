@@ -21,15 +21,21 @@ $fs-400: 1rem;
 $fs-300: .875rem;
 
 $fw-700: 700;
+$fw-600: 600;
+$fw-500: 500;
 $fw-400: 400;
 
+// flex
+$gap-sm: .75rem;
+$gap-md: 1rem;
+
 // Color Themes
-// $text, $bg-color, $user-color, $box-color, $icon-color, $theme-toggle;
-$scheme-dark: $clr-white, $clr-dark-blue, $clr-medium-blue, $clr-dark-blue, $clr-white; 
-$scheme-light: $clr-grey, $clr-light-blue, $clr-white, $clr-light-blue, $clr-grey;
+// $text, $bg-color, $user-color, $box-color, $theme-toggle, $icon-color ;
+$scheme-dark: $clr-white, $clr-dark-blue, $clr-medium-blue, $clr-dark-blue, $clr-white, $clr-white; 
+$scheme-light: $clr-grey, $clr-light-blue, $clr-white, $clr-light-blue, $clr-grey, $clr-blue-grey;
 
 // Mixins
-@mixin color-scheme($text, $bg-color, $user-color, $box-color, $theme-toggle) {
+@mixin color-scheme($text, $bg-color, $user-color, $box-color, $theme-toggle, $icon-color) {
   color: $text;
   background-color: $bg-color;
 
@@ -45,7 +51,10 @@ $scheme-light: $clr-grey, $clr-light-blue, $clr-white, $clr-light-blue, $clr-gre
   .theme-toggle {
     color: $text;
     fill: $theme-toggle;
+  }
 
+  .icon-group > svg {
+    color: $icon-color;
   }
 
 }
@@ -86,7 +95,7 @@ picture {
 
 input,
 button {
-  display: inline-block;
+  // display: inline-block;
   font: inherit;
   background-color: inherit;
   border: none;
@@ -98,22 +107,26 @@ button {
 .text-black { color: $clr-black; }
 .text-grey { color: $clr-grey; }
 .text-light-grey { color: $clr-light-grey; }
-.text-accent-blue { color: $clr-accent-blue; }
+.text-accent { color: $clr-accent-blue; }
 
-.bg-white { background-color: $clr-white; }
-.bg-dark-blue { background-color: $clr-dark-blue; }
-.bg-medium-blue { background-color: $clr-medium-blue; }
-.bg-light-blue { background-color: $clr-light-blue; }
-.bg-accent-blue { background-color: $clr-accent-blue; }
+.fs-500 { font-size: $fs-500; line-height: 24px;  }
+.fs-400 { font-size: $fs-400; }
+.fs-300 { font-size: $fs-300; }
+
+.fw-700 { font-weight: $fw-700; }
+.fw-600 { font-weight: $fw-600; }
+.fw-500 { font-weight: $fw-500; }
+.fw-400 { font-weight: $fw-400; }
 
 .flex {
     display: flex;
-    gap: 1rem;
+    gap: $gap-md;
 }
 
 .container {
-  width: min(50ch, 100vw - 2rem);
+  width: min(75ch, 100vw - 2rem);
   margin-inline: auto;
+  container: userCard / inline-size;
 }
 
 // visually hide the element, but keep it in the accessability tree
@@ -154,7 +167,8 @@ button {
     letter-spacing: 2px;
     text-transform: uppercase;
     display: inline-flex;
-    gap: .75rem;
+    gap: $gap-sm;
+    align-items: center;
 
     & svg {
       font-size: $fs-500;
@@ -166,7 +180,12 @@ button {
 .user-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem 0;
+
+  h1 {
+    font-size: 2rem;
+  }
 }
 
 // search bar
@@ -174,41 +193,122 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem .5rem;
+  padding: .5rem;
   border-radius: 15px;
 
   .form-control {
     display: flex;
     align-items: center;
-    gap: .75rem;
+    gap: $gap-sm;
   }
 
   input,
   input::placeholder {
+    width: 75%;
     color: $clr-white;
   }
 
+  svg {
+    fill: $clr-accent-blue;
+    font-size: $fs-500;
+  }
 }
 
 // user card
 .user-card {
-  border: solid red 2px;
+  display: grid;
+  gap: $gap-md;
+  grid-template-areas: 
+    "avatar data data"
+    "bio bio bio"
+    "stat stat stat"
+    "icon icon icon";
+  margin-block-start: 1.5rem;
+  padding: 2rem .75rem;
   border-radius: 15px;
 
-}
+  img {
+    grid-area: avatar;
+    justify-self: center;
+    max-width: 95px;
+    aspect-ratio: 1 / 1; 
+    border-radius: 50%;
+  }
 
+  .data {
+    grid-area: data;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .bio {
+    grid-area: bio;
+    margin-block-start: 1rem;
+  }
+
+  .github-stats {
+    grid-area: stat;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: $gap-md;
+    border-radius: 15px;
+    padding: 1.5rem 1.25rem 1.5rem 1rem;
+    margin-block: 1rem;
+
+    > * {
+      flex-basis: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: $gap-sm;
+    }
+  }
+
+  .icon-groups {
+    grid-area: icon; 
+    display: flex;
+    flex-direction: column;
+    gap: $gap-sm;
+
+    > * {
+      display: flex;
+      gap: $gap-sm;
+      align-items: center;
+    }
+
+    .icon-group a,
+    .icon-group a:visited {
+      color: white;
+    }
+    
+  }
+}
 
 /*** General Styles ***/
 main {
   min-height: 100vh;
   display: grid;
   place-content: center;
+  padding-block-start: 1rem;
 }
 
 article {
   min-height: 100vh;
 }
 
+
+@container userCard (width > 450px) {
+  .user-card {
+    grid-template-areas: 
+      "avatar data data"
+      ". bio bio"
+      ". stat stat"
+      ". icon icon";
+  }
+}
 
 
 

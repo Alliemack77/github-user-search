@@ -40,39 +40,43 @@ const UserCard = () => {
 
     return (
         <div className="user-card">
-            <img src={avatar_url} alt=""/>
-            <p>{login}</p>
-            <p>{twitter_username || name}</p>
-            <p>Joined {day} {month} {year}</p>
-            <p>{bio || "This profile has no bio."}</p>
+            <img className="avatar" src={avatar_url} alt=""/>
+            <div className="data">
+                <div>
+                    <p className="fs-500 fw-700">{login}</p>
+                    <p className="text-accent ">{twitter_username || name}</p>
+                </div>
+                <p>Joined {day} {month} {year}</p>
+            </div>
+            <p className="bio">{bio || "This profile has no bio."}</p>
             <div className="github-stats">
-                <div>
+                <div className="stat">
                     <p>Repos</p>
-                    <p>{public_repos}</p>
+                    <p className="fs-500 fw-700">{public_repos}</p>
                 </div>
-                <div>
+                <div className="stat">
                     <p>Followers</p>
-                    <p>{followers}</p>
+                    <p className="fs-500 fw-700">{followers}</p>
                 </div>
-                <div>
+                <div className="stat">
                     <p>Following</p>
-                    <p>{following}</p>
+                    <p className="fs-500 fw-700">{following}</p>
                 </div>
             </div>
-            <div>
-                <div>
+            <div className="icon-groups">
+                <div className="icon-group">
                     <MdLocationOn />
                     <p>{location || "Earth"}</p>
                 </div>
-                <div>
+                <div className="icon-group">
                     <FiLink />
                     <a href={html_url}><p>{html_url}</p></a>
                 </div>
-                <div>
+                <div className="icon-group">
                     <FaTwitter />
                     <p>{twitter_username ? `@${twitter_username}` : "Not available"}</p>
                 </div>
-                <div>
+                <div className="icon-group">
                     <AiOutlineMail />
                     <p>{email || "Private"}</p>
                 </div>
