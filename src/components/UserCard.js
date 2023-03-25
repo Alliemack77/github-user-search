@@ -32,7 +32,7 @@ const UserCard = () => {
     if(errorUser) {
         return (
             <div className="user-card">
-                <img src={sadKitty}></img>
+                <img src={sadKitty} alt=""></img>
                 <p className="login">We've looked everywhere!</p>
                 <p className="twitter">There's no one here by that name.</p>
                 <p className="bio">Try your search again.</p>
