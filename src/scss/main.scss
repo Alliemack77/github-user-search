@@ -5,11 +5,11 @@
 // colors
 $clr-dark-blue: hsl(223, 41%, 13%);
 $clr-medium-blue: hsl(224, 40%, 20%);
-$clr-light-blue: hsl(220, 100%, 98%);
+$clr-light-blue: hsl(220, 100%, 95%);
 $clr-accent-blue: hsl(212, 99%, 50%);
 $clr-black: hsl(220, 8%, 8%);
 $clr-white: hsl(0, 0%, 100%); 
-$clr-grey: hsl(212, 7%, 36%);
+$clr-grey: hsl(212, 7%, 33%);
 $clr-light-grey: hsl(224, 10%, 56%);
 $clr-blue-grey: hsl(215, 24%, 49%);
 
@@ -29,19 +29,24 @@ $fw-400: 400;
 $gap-sm: .75rem;
 $gap-md: 1rem;
 
+// box-shadow
+$box-shadow-dark: 0 0 0 0 rgba(0, 0, 0, 0);
+$box-shadow-light: 0px 5px 10px 0px rgb(205, 205, 205);
+
 // Color Themes
-// $text, $bg-color, $user-color, $box-color, $theme-toggle, $icon-color ;
-$scheme-dark: $clr-white, $clr-dark-blue, $clr-medium-blue, $clr-dark-blue, $clr-white, $clr-white; 
-$scheme-light: $clr-grey, $clr-light-blue, $clr-white, $clr-light-blue, $clr-grey, $clr-blue-grey;
+// $text, $bg-color, $user-color, $box-color, $theme-toggle, $icon-color, $box-shadow
+$scheme-dark: $clr-white, $clr-dark-blue, $clr-medium-blue, $clr-dark-blue, $clr-white, $clr-white, $box-shadow-dark; 
+$scheme-light: $clr-grey, $clr-light-blue, $clr-white, $clr-light-blue, $clr-grey, $clr-blue-grey, $box-shadow-light;
 
 // Mixins
-@mixin color-scheme($text, $bg-color, $user-color, $box-color, $theme-toggle, $icon-color) {
+@mixin color-scheme($text, $bg-color, $user-color, $box-color, $theme-toggle, $icon-color, $box-shadow) {
   color: $text;
   background-color: $bg-color;
 
   .search-bar, 
   .user-card {
     background-color: $user-color;
+    box-shadow: $box-shadow;
   }
 
   .github-stats {
@@ -57,7 +62,16 @@ $scheme-light: $clr-grey, $clr-light-blue, $clr-white, $clr-light-blue, $clr-gre
     color: $icon-color;
   }
 
+  input,
+  input::placeholder {
+    color: $text;
+  }
 }
+
+@mixin box-shadow() {
+  
+}
+
 
 /*** Reset ***/
 *,
@@ -84,7 +98,6 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   font-family: $ff-primary;
-  
 }
 
 img,
@@ -95,10 +108,13 @@ picture {
 
 input,
 button {
-  // display: inline-block;
   font: inherit;
   background-color: inherit;
   border: none;
+}
+
+a {
+  text-decoration: none;
 }
 
 
@@ -150,16 +166,20 @@ button {
   @include color-scheme($scheme-light ...)
 }
 
+
 /*** Components ***/
 // button
 .btn {
-  
   padding: .5rem 1rem;
   color: $clr-white;
   font-weight: 500;
   background-color: $clr-accent-blue;
   border-radius: 10px;
   cursor: pointer;
+
+  &:hover {
+    background-color: hsl(212, 95%, 70%);
+  }
 
   &.theme-toggle {
     background-color: unset;
@@ -193,7 +213,7 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .5rem;
+  padding: 1rem;
   border-radius: 15px;
 
   .form-control {
@@ -202,10 +222,9 @@ button {
     gap: $gap-sm;
   }
 
-  input,
-  input::placeholder {
+  input {
     width: 75%;
-    color: $clr-white;
+    // color: $clr-white;
   }
 
   svg {
@@ -217,35 +236,66 @@ button {
 // user card
 .user-card {
   display: grid;
-  gap: $gap-md;
+  gap: .5rem;
   grid-template-areas: 
-    "avatar data data"
+    "avatar login login"
+    "avatar twitter twitter"
+    "avatar date date"
     "bio bio bio"
     "stat stat stat"
-    "icon icon icon";
+    "location location location"
+    "twitterIcon twitterIcon twitterIcon"
+    "email email email"
+    "something something something"
+    "page page page";
   margin-block-start: 1.5rem;
-  padding: 2rem .75rem;
+  padding: 2rem;
   border-radius: 15px;
 
-  img {
-    grid-area: avatar;
-    justify-self: center;
-    max-width: 95px;
-    aspect-ratio: 1 / 1; 
-    border-radius: 50%;
+  .login {
+    grid-area: login;
   }
 
-  .data {
-    grid-area: data;
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  .twitter {
+    grid-area: twitter;
+  }
+
+  .date {
+    grid-area: date;
   }
 
   .bio {
     grid-area: bio;
-    margin-block-start: 1rem;
+    margin-block-start: 2rem;
+  }
+
+  .location {
+    grid-area: location;
+  }
+
+  .twitter-icon {
+    grid-area: twitterIcon;
+  }
+
+  .page {
+    grid-area: page;
+  }
+
+  .email {
+    grid-area: email;
+  }
+
+  .something {
+    grid-area: something;
+  }
+
+  img {
+    grid-area: avatar;
+    justify-self: start;
+    max-width: 100px;
+    aspect-ratio: 1 / 1; 
+    border-radius: 50%;
+    margin-right: 1rem;
   }
 
   .github-stats {
@@ -256,7 +306,8 @@ button {
     gap: $gap-md;
     border-radius: 15px;
     padding: 1.5rem 1.25rem 1.5rem 1rem;
-    margin-block: 1rem;
+    margin-block-start: 1rem;
+
 
     > * {
       flex-basis: 100%;
@@ -267,23 +318,11 @@ button {
     }
   }
 
-  .icon-groups {
-    grid-area: icon; 
+  .icon-group {
     display: flex;
-    flex-direction: column;
     gap: $gap-sm;
-
-    > * {
-      display: flex;
-      gap: $gap-sm;
-      align-items: center;
-    }
-
-    .icon-group a,
-    .icon-group a:visited {
-      color: white;
-    }
-    
+    align-items: center;
+    margin-block-start: 1rem;
   }
 }
 
@@ -292,7 +331,7 @@ main {
   min-height: 100vh;
   display: grid;
   place-content: center;
-  padding-block-start: 1rem;
+  padding-block: 2rem;
 }
 
 article {
@@ -300,13 +339,27 @@ article {
 }
 
 
-@container userCard (width > 450px) {
+/*** Container queries ***/
+@container userCard (width > 550px) {
   .user-card {
     grid-template-areas: 
-      "avatar data data"
-      ". bio bio"
+      "avatar login date"
+      "avatar twitter twitter"
+      "avatar bio bio"
       ". stat stat"
-      ". icon icon";
+      ". location twitterIcon"
+      ". email something"
+      ". page page";
+    gap: 0;
+  }
+
+  .date {
+    justify-self: end;
+  }
+
+  .twitter-icon, 
+  .something {
+    margin-left: .8rem;
   }
 }
 

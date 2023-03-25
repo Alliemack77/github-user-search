@@ -1,9 +1,9 @@
 import React,{ useContext } from 'react'
 import { GithubContext } from '../context/context'
-import { MdLocationOn } from 'react-icons/md'
-import { FiLink } from 'react-icons/fi'
+import { MdLocationOn, MdLocalPostOffice } from 'react-icons/md'
+import { HiOfficeBuilding } from 'react-icons/hi'
 import { FaTwitter } from 'react-icons/fa'
-import { AiOutlineMail } from 'react-icons/ai'
+// import { MdLocalPostOffice } from 'react-icons/ai'
 import sadKitty from '../assets/sad-kitty-search.jpg'
 
 const UserCard = () => {
@@ -20,7 +20,8 @@ const UserCard = () => {
         following, 
         location,
         html_url, 
-        email
+        email,
+        hireable,
     } = githubUser
 
     const date = new Date(created_at)
@@ -30,10 +31,11 @@ const UserCard = () => {
 
     if(errorUser) {
         return (
-            <div>
+            <div className="user-card">
                 <img src={sadKitty}></img>
-                <p>We've looked everywhere!</p>
-                <p>There's no one here by that name. Try your search again.</p>
+                <p className="login">We've looked everywhere!</p>
+                <p className="twitter">There's no one here by that name.</p>
+                <p className="bio">Try your search again.</p>
             </div>
         )
     }
@@ -41,45 +43,39 @@ const UserCard = () => {
     return (
         <div className="user-card">
             <img className="avatar" src={avatar_url} alt=""/>
-            <div className="data">
-                <div>
-                    <p className="fs-500 fw-700">{login}</p>
-                    <p className="text-accent ">{twitter_username || name}</p>
-                </div>
-                <p>Joined {day} {month} {year}</p>
-            </div>
+            <p className="login fs-500 fw-700">{login}</p>
+            <a className="twitter text-accent" href={html_url}>{name}</a>
+            <p className="date">Joined {day} {month} {year}</p>
             <p className="bio">{bio || "This profile has no bio."}</p>
             <div className="github-stats">
-                <div className="stat">
+                <div>
                     <p>Repos</p>
                     <p className="fs-500 fw-700">{public_repos}</p>
                 </div>
-                <div className="stat">
+                <div>
                     <p>Followers</p>
                     <p className="fs-500 fw-700">{followers}</p>
                 </div>
-                <div className="stat">
+                <div>
                     <p>Following</p>
                     <p className="fs-500 fw-700">{following}</p>
                 </div>
             </div>
-            <div className="icon-groups">
-                <div className="icon-group">
-                    <MdLocationOn />
-                    <p>{location || "Earth"}</p>
-                </div>
-                <div className="icon-group">
-                    <FiLink />
-                    <a href={html_url}><p>{html_url}</p></a>
-                </div>
-                <div className="icon-group">
-                    <FaTwitter />
-                    <p>{twitter_username ? `@${twitter_username}` : "Not available"}</p>
-                </div>
-                <div className="icon-group">
-                    <AiOutlineMail />
-                    <p>{email || "Private"}</p>
-                </div>
+            <div className="location icon-group">
+                <MdLocationOn />
+                <p>{location || "Earth"}</p>
+            </div>
+            <div className="twitter-icon icon-group">
+                <FaTwitter />
+                <p>{twitter_username ? `@${twitter_username}` : "Not available"}</p>
+            </div>
+            <div className="email icon-group">
+                <MdLocalPostOffice />
+                <p>{email || "Private"}</p>
+            </div>
+            <div className="something icon-group">
+                <HiOfficeBuilding />
+                <p>{hireable === null ? "Private" : "Looking for work"}</p>
             </div>
         </div>     
     )  
